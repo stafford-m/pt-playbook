@@ -1,42 +1,42 @@
-# [PORT] - [PROTOCOL NAME]
+# 21 - FTP
 
 ## 1. Banner Grab & Manual Verification
 
 netcat grab
 ```bash
-nc -nv $IP 21
+nc -nv $ip 21
 ```
 netcat grab with timeout
 ```bash
-timeout 5 nc $IP 21
+timeout 5 nc $ip 21
 ```
 
 If SSL/TLS is enabled on this port (implicit/explicit ftps - implicit is normally on 990)
 ```bash
-openssl s_client -connect $IP:21 -starttls ftp
+openssl s_client -connect $ip:21 -starttls ftp
 ```
 
 curl - Works but noisy
 ```bash
-curl -v ftp://$IP:21/ 2>&1 | head -n 5 
+curl -v ftp://$ip:21/ 2>&1 | head -n 5 
 ```
 
 ## 2. Unauthenticated Enumeration
 
 Anonymous login: anonymous:anonymous
 ```bash
-ftp $IP
+ftp $ip
 ```
 ```bash
-lftp -u anonymous,anonymous@ $IP
+lftp -u anonymous,anonymous@ $ip
 ```
 ```bash
-curl -s --max-time 8 ftp://anonymous:anonymous@$IP/
+curl -s --max-time 8 ftp://anonymous:anonymous@$ip/
 ```
 
 Will report if root is writable
 ```bash
-nmap -p 21 --script ftp-anon $IP
+nmap -p 21 --script ftp-anon $ip
 ```
 
 Enumerate FTP features
