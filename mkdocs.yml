@@ -1,0 +1,10 @@
+site_name: PT Playbook
+theme:
+  name: material
+  palette:
+    scheme: slate
+  features:
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+    - navigation.expand
