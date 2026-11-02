@@ -47,7 +47,7 @@ redis-cli -h $ip KEYS '*'
 *Redis auth is a single password, not per-user. Try defaults first (`foobared` is the shipped example).*
 ```bash
 redis-cli -h $ip -a foobared ping   # test default
-hydra -P pass.txt redis://$ip
+hydra -P pass.txt $ip redis
 nxc redis $ip -p 6379 --pass-file pass.txt
 ```
 
