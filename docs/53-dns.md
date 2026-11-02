@@ -2,76 +2,96 @@
 
 ## Service Usage
 
-Query
+Query all records (ANY)
 ```bash
 dig @$ip $domain ANY
+```
+Query A records
+```bash
 dig @$ip $domain A
+```
+Query MX records
+```bash
 dig @$ip $domain MX
+```
+Query TXT records
+```bash
 dig @$ip $domain TXT
 ```
-Reverse lookup
+Reverse lookup an IP
 ```bash
 dig @$ip -x $ip
 ```
-Zone transfer
+Attempt a zone transfer
 ```bash
 dig @$ip $domain AXFR
 ```
 
 ## 0. Fast Path (try these first)
 
-Zone transfer (free full zone dump if misconfigured):
+Zone transfer (free full zone dump if misconfigured)
 ```bash
 dig @$ip $domain AXFR
 ```
-
-If that fails, query-brute:
+dnsrecon AXFR attempt
 ```bash
 dnsrecon -d $domain -t axfr
+```
+dnsrecon standard recon
+```bash
 dnsrecon -d $domain -t std
 ```
 
 ## 1. Banner Grab & Unauthenticated Enumeration
 
-Version
+Query BIND version
 ```bash
 dig @$ip CH TXT version.bind
 ```
-
-Zone transfer + standard recon
+Zone transfer plus standard discovery
 ```bash
 dnsrecon -d $domain -t axfr -t std -t brt
+```
+dnsenum enumeration
+```bash
 dnsenum $domain
 ```
-
-nmap NSE
+Version and default-script scan
 ```bash
 nmap -p 53 -sV -sC $ip
+```
+nmap zone-transfer script
+```bash
 nmap -p 53 --script dns-zone-transfer $ip
 ```
-
-Subdomain brute
+Subdomain brute with dnsrecon
 ```bash
 dnsrecon -d $domain -t brt -D /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt
 ```
+Subdomain brute via virtual host
 ```bash
 ffuf -u http://$ip/ -H "Host: FUZZ.$domain" -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt -fs <size>
 ```
 
 ## 2. Authenticated Enumeration
 
-*DNS has no auth — "authenticated" here means once you're on the box, read local DNS configs for internal-only names.*
-
-Read local configs (post-exploit)
+DNS has no auth — "authenticated" here means once you're on the box, read local DNS configs for internal-only names.
+Read local hosts file
 ```bash
 cat /etc/hosts
+```
+Read resolver config
+```bash
 cat /etc/resolv.conf
+```
+Read BIND config
+```bash
 cat /etc/bind/named.conf
 ```
 
 ## 3. Password Spraying / Bruteforcing
 
-*N/A — DNS has no password auth. Skip.*
+N/A — DNS has no password auth. Skip.
 
 ## 5. Quick Wins
 

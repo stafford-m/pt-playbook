@@ -2,15 +2,18 @@
 
 ## Service Usage
 
-Connect
+Connect with telnet
 ```bash
 telnet $ip
+```
+Connect with nc
+```bash
 nc -nv $ip 23
 ```
 
 ## 0. Fast Path (try these first)
 
-Grab banner + default creds:
+Grab banner with timeout before trying default creds
 ```bash
 timeout 5 nc $ip 23
 ```
@@ -18,32 +21,41 @@ Default creds: `admin:admin`, `root:root`, `cisco:cisco`, `admin:`, `root:passwo
 
 ## 1. Banner Grab & Unauthenticated Enumeration
 
-Manual banner
+Manual banner grab
 ```bash
 nc -nv $ip 23
+```
+Banner grab with timeout
+```bash
 timeout 5 nc $ip 23 | head
 ```
-
-Version
+Version and default-script scan
 ```bash
 nmap -p 23 -sV -sC $ip
+```
+Telnet encryption and NTLM info scripts
+```bash
 nmap -p 23 --script telnet-encryption,telnet-ntlm-info $ip
 ```
 
 ## 2. Authenticated Enumeration
 
-Once logged in, it depends on the device (router, embedded, *nix):
+Enumerate a *nix-like host
 ```bash
-# *nix-like
 uname -a; id; cat /etc/passwd
-# network device
+```
+Enumerate a network device running-config
+```bash
 show running-config
+```
+Enumerate a network device version
+```bash
 show version
 ```
 
 ## 3. Password Spraying / Bruteforcing
 
-Brute force
+Brute force with hydra
 ```bash
 hydra -L users.txt -P pass.txt telnet://$ip
 ```

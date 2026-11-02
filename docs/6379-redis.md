@@ -2,52 +2,69 @@
 
 ## Service Usage
 
-Connect
+Connect with redis-cli
 ```bash
 redis-cli -h $ip
 ```
 
 ## 0. Fast Path (try these first)
 
-Test unauthenticated access (Redis ships with no auth by default):
+Test unauthenticated access (PONG = no auth needed)
 ```bash
-redis-cli -h $ip ping          # PONG = no auth needed
+redis-cli -h $ip ping
+```
+Get server info
+```bash
 redis-cli -h $ip info
 ```
 
 ## 1. Banner Grab & Unauthenticated Enumeration
 
-nmap
+Version and default-script scan
 ```bash
 nmap -p 6379 -sV -sC $ip
+```
+Redis-info NSE script
+```bash
 nmap -p 6379 --script redis-info $ip
 ```
-
-Manual
+Get INFO manually
 ```bash
 redis-cli -h $ip INFO
+```
+Get all config values
+```bash
 redis-cli -h $ip CONFIG GET *
 ```
 
 ## 2. Authenticated Enumeration
 
-If auth is required (single `requirepass` password, or ACL users on Redis 6+):
+Get info with a password (requirepass or ACL)
 ```bash
 redis-cli -h $ip -a $pw info
+```
+Get the requirepass value
+```bash
 redis-cli -h $ip -a $pw CONFIG GET requirepass
 ```
-
-Dump keys
+Dump all keys
 ```bash
 redis-cli -h $ip KEYS '*'
 ```
 
 ## 3. Password Spraying / Bruteforcing
 
-*Redis auth is a single password, not per-user. Try defaults first (`foobared` is the shipped example).*
+Redis auth is a single password, not per-user. Try defaults first (foobared is the shipped example).
+Test the default password
 ```bash
-redis-cli -h $ip -a foobared ping   # test default
+redis-cli -h $ip -a foobared ping
+```
+Brute force with hydra
+```bash
 hydra -P pass.txt $ip redis
+```
+Brute force with nxc
+```bash
 nxc redis $ip -p 6379 --pass-file pass.txt
 ```
 

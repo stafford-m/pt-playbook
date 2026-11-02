@@ -2,42 +2,52 @@
 
 ## Service Usage
 
-Connect
+Connect with nc
 ```bash
 nc -nv $ip 11211
 ```
 
 ## 0. Fast Path (try these first)
 
-Test access + dump stats:
+Test access and dump stats
 ```bash
 echo "stats" | nc $ip 11211
+```
+Dump item stats (to find slabs)
+```bash
 echo "stats items" | nc $ip 11211
 ```
 
 ## 1. Banner Grab & Unauthenticated Enumeration
 
-nmap
+Version and default-script scan
 ```bash
 nmap -p 11211 -sV -sC $ip
+```
+Memcached-info NSE script
+```bash
 nmap -p 11211 --script memcached-info $ip
 ```
-
-Manual
+Query version manually
 ```bash
 printf "version\r\n" | nc $ip 11211
+```
+Query stats manually
+```bash
 printf "stats\r\n" | nc $ip 11211
 ```
 
 ## 2. Authenticated Enumeration
 
-*Memcached (old versions) has no auth — extract cached data:*
+Memcached (old versions) has no auth — extract cached data here.
+Dump item stats
 ```bash
 echo "stats items" | nc $ip 11211
-# from stats items, get slab IDs, then dump each:
+```
+Dump a specific slab (replace placeholders)
+```bash
 echo "stats cachedump <slab_id> <limit>" | nc $ip 11211
 ```
-
 Automate full dump
 ```bash
 memcdump --servers=$ip
@@ -45,7 +55,7 @@ memcdump --servers=$ip
 
 ## 3. Password Spraying / Bruteforcing
 
-*N/A — no auth (unless SASL, which is rare).*
+N/A — no auth (unless SASL, which is rare).
 
 ## 5. Quick Wins
 

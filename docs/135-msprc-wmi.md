@@ -5,9 +5,11 @@
 Query MSRPC endpoints
 ```bash
 impacket-rpcdump $ip
+```
+Query via rpcclient (null session)
+```bash
 rpcclient -U "" -N $ip -c "srvinfo"
 ```
-
 WMI exec (needs creds)
 ```bash
 impacket-wmiexec $domain/$un:$pw@$ip
@@ -15,7 +17,7 @@ impacket-wmiexec $domain/$un:$pw@$ip
 
 ## 0. Fast Path (try these first)
 
-Endpoint dump (reveals what RPC services are exposed):
+Endpoint dump (reveals what RPC services are exposed)
 ```bash
 impacket-rpcdump $ip
 ```
@@ -23,36 +25,40 @@ Usually 135 pairs with SMB — so most of your 135 work is really SMB/WMI exec. 
 
 ## 1. Banner Grab & Unauthenticated Enumeration
 
-nmap
+Version and default-script scan
 ```bash
 nmap -p 135 -sV -sC $ip
 ```
-
-Enumerate endpoints/auth
+Enumerate endpoints
 ```bash
 impacket-rpcdump $ip
+```
+Enumerate users via null session
+```bash
 rpcclient -U "" -N $ip -c "enumdomusers"
 ```
 
 ## 2. Authenticated Enumeration
 
-With creds
+Enumerate users, groups, shares with creds
 ```bash
 rpcclient -U "$un%$pw" $ip -c "enumdomusers; enumdomgroups; netshareenumall"
-impacket-wmiexec $domain/$un:$pw@$ip       # shell via WMI
 ```
-
-WMI query
+Shell via WMI
+```bash
+impacket-wmiexec $domain/$un:$pw@$ip
+```
+Run a WMI query (single command)
 ```bash
 impacket-wmiexec $domain/$un:$pw@$ip 'systeminfo'
 ```
 
 ## 3. Password Spraying / Bruteforcing
 
-*Same as SMB — MSRPC is just another transport for the same creds.*
-
+Same as SMB — MSRPC is just another transport for the same creds.
+Single credential check
 ```bash
-rpcclient -U "$un%$pw" $ip -c "srvinfo"    # single check
+rpcclient -U "$un%$pw" $ip -c "srvinfo"
 ```
 
 ## 5. Quick Wins
