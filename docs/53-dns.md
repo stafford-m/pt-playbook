@@ -1,116 +1,66 @@
 # 53 - DNS
 
-## Service Usage
-
-Query all records (ANY)
+## Service Scanning
+Check both udp/53 and tcp/53
+```bash
+nmap -sS -sU -p T:53,U:53 $ip
+```
+nmap scripts that can do a lot of this
+```bash
+nmap --script-help dns-*
+```
+## Service Enumeration
+Getting records
 ```bash
 dig @$ip $domain ANY
 ```
-Query A records
+
 ```bash
-dig @$ip $domain A
+host -t $rtype $url
 ```
-Query MX records
+
+using windows
 ```bash
-dig @$ip $domain MX
+nslookup -type=TXT $url $dnsserver
 ```
-Query TXT records
+
+Resolve host to ip
 ```bash
-dig @$ip $domain TXT
+host $url
 ```
-Reverse lookup an IP
+
+standard scan
 ```bash
-dig @$ip -x $ip
+dnsrecon -d megacorpone.com -t std
 ```
-Attempt a zone transfer
+
+bruteforce scan
+```bash
+dnsrecon -d megacorpone.com -t brt
+```
+
+autoenum most things
+```bash
+dnsenum $url
+```
+
+Attempt zone transfer
 ```bash
 dig @$ip $domain AXFR
 ```
 
-## 0. Fast Path (try these first)
-
-Zone transfer (free full zone dump if misconfigured)
-```bash
-dig @$ip $domain AXFR
-```
-dnsrecon AXFR attempt
-```bash
-dnsrecon -d $domain -t axfr
-```
-dnsrecon standard recon
-```bash
-dnsrecon -d $domain -t std
+### Record Types
+```text	
+- NS: Nameserver records contain the name of the authoritative servers hosting the DNS records for a domain.
+- A: Also known as a host record, the "a record" contains the IPv4 address of a hostname.
+- AAAA: Also known as a quad A host record, the "aaaa record" contains the IPv6 address of a hostname.
+- MX: Mail Exchange records contain the names of the servers responsible for handling email for the domain. A domain can contain multiple MX records.
+- PTR: Pointer Records are used in reverse lookup zones and can find the records associated with an IP address.
+- CNAME: Canonical Name Records are used to create aliases for other host records.
+- TXT: Text records can contain any arbitrary data and be used for various purposes, such as domain ownership verification.
 ```
 
-## 1. Banner Grab & Unauthenticated Enumeration
-
-Query BIND version
-```bash
-dig @$ip CH TXT version.bind
-```
-Zone transfer plus standard discovery
-```bash
-dnsrecon -d $domain -t axfr -t std -t brt
-```
-dnsenum enumeration
-```bash
-dnsenum $domain
-```
-Version and default-script scan
-```bash
-nmap -p 53 -sV -sC $ip
-```
-nmap zone-transfer script
-```bash
-nmap -p 53 --script dns-zone-transfer $ip
-```
-Subdomain brute with dnsrecon
-```bash
-dnsrecon -d $domain -t brt -D /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt
-```
-Subdomain brute via virtual host
-```bash
-ffuf -u http://$ip/ -H "Host: FUZZ.$domain" -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt -fs <size>
-```
-
-## 2. Authenticated Enumeration
-
-DNS has no auth — "authenticated" here means once you're on the box, read local DNS configs for internal-only names.
-Read local hosts file
-```bash
-cat /etc/hosts
-```
-Read resolver config
-```bash
-cat /etc/resolv.conf
-```
-Read BIND config
-```bash
-cat /etc/bind/named.conf
-```
-
-## 3. Password Spraying / Bruteforcing
-
-N/A — DNS has no password auth. Skip.
-
-## 5. Quick Wins
-
-### 5.1 AXFR worked → full zone dump
-```bash
-dig @$ip $domain AXFR
-```
-
-### 5.2 Find internal hostnames → pivot targets
-```bash
-# Zone dump reveals intranet boxes not in your scope list — check and hit them
-```
-
-### 5.3 TXT/SPF records leak IPs and mail infrastructure
-```bash
-dig @$ip $domain TXT
-```
-
-## 6. Config Paths
+## Config Paths
 
 BIND
 ```text
@@ -130,7 +80,7 @@ named.conf.local -> zone definitions, allow-transfer (AXFR rules)
 /etc/hosts       -> internal name→IP map (great loot)
 ```
 
-## 7. Post-Exploit / Pivot
+## Post-Enumeration
 
 - Zone/subdomain discovery → new HTTP/SMB targets
 - /etc/hosts reveals internal assets
