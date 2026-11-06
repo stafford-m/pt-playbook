@@ -1,0 +1,25 @@
+Query registered rpc services
+```bash
+rpcinfo -p $ip
+```
+
+filter services
+```bash
+rpcinfo -p $ip | grep nfs
+```
+
+null session
+rpcclient -U "" -N $ip -c "srvinfo; enumdomusers; enumalsgroups domain; lsaquery"
+
+auth session
+rpcclient -U "$un%$pw" $ip -c "enumdomusers"
+rpcclient -U "$un%$pw" $ip -c "enumdomgroups"
+rpcclient -U "$un%$pw" $ip -c "queryuser 500"      # RID 500 = built-in admin
+rpcclient -U "$un%$pw" $ip -c "netshareenumall"
+rpcclient -U "$un%$pw" $ip -c "querydispinfo"
+
+
+
+
+
+nmap -p $port -sV -sC $ip
