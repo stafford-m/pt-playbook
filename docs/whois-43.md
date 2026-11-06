@@ -1,4 +1,4 @@
-# 43 - WHOIS
+# WHOIS - 43
 
 Forward whois lookup
 ```bash

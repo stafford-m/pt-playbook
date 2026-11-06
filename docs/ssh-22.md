@@ -1,4 +1,4 @@
-# 22 - SSH
+# SSH - 22
 
 ## Service Usage
 

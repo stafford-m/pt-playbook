@@ -1,4 +1,4 @@
-# 6379 - Redis
+# Redis - 6379
 
 ## Service Usage
 

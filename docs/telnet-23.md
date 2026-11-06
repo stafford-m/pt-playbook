@@ -1,4 +1,4 @@
-# 23 - Telnet
+# Telnet - 23
 
 ## Service Usage
 

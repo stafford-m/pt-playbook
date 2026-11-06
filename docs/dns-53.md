@@ -1,4 +1,4 @@
-# 53 - DNS
+# DNS - 53
 
 ## Service Scanning
 Check both udp/53 and tcp/53

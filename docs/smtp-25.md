@@ -1,4 +1,4 @@
-# 25 - SMTP
+# SMTP - 25
 
 ## Service Usage
 
