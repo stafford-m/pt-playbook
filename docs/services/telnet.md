@@ -1,6 +1,6 @@
 # Telnet
 
-### Port: 23
+_Port: 23_
 
 ## Service Usage
 

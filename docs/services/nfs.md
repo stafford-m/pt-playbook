@@ -1,6 +1,6 @@
 # NFS
 
-### Port: 2049
+_Port: 2049_
 
 ## Service Usage
 
@@ -35,7 +35,7 @@ Config quick-reference:
 ```
 
 ### Common gotchas
-```text
+-```text
 - "no_root_squash" = your root maps to target root (write setuid binaries).
 - Mount fails? Use -o nolock, and make sure rpcbind (111) is reachable too.
 - Read-only exports still leak creds/configs — don't skip them.

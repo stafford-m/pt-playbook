@@ -1,6 +1,6 @@
 # WHOIS
 
-### Port: 43
+_Port: 43_
 
 Forward whois lookup
 ```bash

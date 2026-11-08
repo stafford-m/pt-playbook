@@ -1,6 +1,6 @@
 # DNS
 
-### Port: 53
+_Port: 53_
 
 ## Service Scanning
 Check both udp/53 and tcp/53

