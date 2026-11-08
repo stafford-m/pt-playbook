@@ -22,3 +22,13 @@ Brute force with hydra
 ```bash
 hydra -L users.txt -P pass.txt rdp://$ip
 ```
+
+SSH brute is slow and noisy — spray only, and only after other methods fail.
+Spray a single password across users
+```bash
+hydra -L users.txt -p 'Spring2026!' -t 4 ssh://$ip
+```
+Brute force with a password list
+```bash
+hydra -L users.txt -P pass.txt -t 4 ssh://$ip
+```
