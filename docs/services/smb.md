@@ -1,4 +1,6 @@
-# SMB - 445/139
+# SMB
+
+### Port: 139, 445
 
 ## Service Usage
 Attempt null/anonymous session and list shares

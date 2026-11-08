@@ -1,4 +1,6 @@
-# SNMP - 161/162
+# SNMP
+
+### Port: 161, 162
 
 ## Service Scanning
 

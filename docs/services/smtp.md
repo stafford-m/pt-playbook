@@ -1,4 +1,6 @@
-# SMTP - 25
+# SMTP
+
+### Port: 25
 
 ## Service Usage
 

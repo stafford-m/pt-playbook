@@ -1,4 +1,6 @@
-# HTTP/HTTPS - 80/443
+# HTTP/HTTPS
+
+### Port: 80, 443
 
 ## Service Usage
 

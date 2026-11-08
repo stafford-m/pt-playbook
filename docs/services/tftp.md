@@ -1,4 +1,6 @@
-# TFTP - 69
+# TFTP
+
+### Port: 69
 
 ## Service Usage
 

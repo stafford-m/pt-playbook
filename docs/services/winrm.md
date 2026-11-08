@@ -1,4 +1,6 @@
-# WinRM - 5985/5986
+# WinRM
+
+### Port: 5985, 5986
 
 ## Service Usage
 

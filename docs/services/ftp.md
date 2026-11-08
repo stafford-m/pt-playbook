@@ -1,4 +1,6 @@
-# FTP - 21
+# FTP
+
+### Port: 21
 
 ## Service Usage
 

@@ -1,4 +1,6 @@
-# Kerberos - 88
+# Kerberos
+
+### Port: 88
 
 ## Service Usage
 

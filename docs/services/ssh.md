@@ -1,4 +1,6 @@
-# SSH - 22
+# SSH
+
+### Port: 22
 
 ## Service Usage
 
