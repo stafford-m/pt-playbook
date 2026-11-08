@@ -8,3 +8,23 @@ theme:
     - search.suggest
     - search.highlight
     - navigation.expand
+
+nav:
+  - Home: index.md
+  - Services:
+      - services/dns.md
+      - services/ftp.md
+      - services/http.md
+      - services/kerberos.md
+      - services/msrpc.md
+      - services/nfs.md
+      - services/rdp.md
+      - services/rpc.md
+      - services/smb.md
+      - services/smtp.md
+      - services/snmp.md
+      - services/ssh.md
+      - services/telnet.md
+      - services/tftp.md
+      - services/whois.md
+      - services/winrm.md
