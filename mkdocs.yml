@@ -4,10 +4,29 @@ theme:
   palette:
     scheme: slate
   features:
-    - content.code.copy
+    - navigation.sections
+    - navigation.indexes
+    - navigation.instant
+    - navigation.top
     - search.suggest
     - search.highlight
-    - navigation.expand
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - toc:
+      permalink: true
+
+plugins:
+  - search
 
 nav:
   - Home: index.md
