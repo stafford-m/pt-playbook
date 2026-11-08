@@ -34,7 +34,6 @@ nav:
       - services/dns.md
       - services/ftp.md
       - services/http.md
-      - services/kerberos.md
       - services/msrpc.md
       - services/nfs.md
       - services/rdp.md
