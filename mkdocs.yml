@@ -32,6 +32,7 @@ nav:
   - Home: index.md
   - Generic:
       - generic/scans.md
+      - generic/bruteforcing.md
   - Service Enumeration:
       - services/dns.md
       - services/ftp.md

