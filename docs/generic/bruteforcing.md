@@ -57,3 +57,4 @@ Directory/file brute with gobuster
 ```bash
 gobuster dir -u http://$ip -w /usr/share/wordlists/dirb/common.txt -x php,txt,bak,old -t 40
 ```
+gobuster dir -u ftp://$ip -w pslist.txt

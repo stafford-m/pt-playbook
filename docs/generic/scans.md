@@ -1,53 +1,50 @@
-curl - Works but noisy
+# Scanning & Banner Grabbing
+
+## netcat
+basic nc banner grab
 ```bash
-curl -v ftp://$ip:21/ 2>&1 | head -n 5 
+nc $ip $port
 ```
 
-Anonymous login: anonymous:anonymous
 ```bash
+-n      # no resolve dns
+-v      # verbose
+-vv     # very verbose
+-w 5    # timeout 5
+-z      # zero i/o - don't send data
+-l      # listen
+-p      # specify port (for listen)
+```
+
+## curl
+curl can be used for protocols other than http
+```bash
+curl -v ftp://$ip:21/ 2>&1 | head -n 5
 curl -s --max-time 8 ftp://anonymous:anonymous@$ip/
 ```
 
-Will report if root is writable
+## nmap
+gettings all help for a specific protocol
 ```bash
-nmap -p 21 --script ftp-anon $ip
-```
-
-Enumerate FTP features
-```bash
-nmap -p 21 --script ftp-features $ip
-```
-
-enumerate common directories
-```bash
-gobuster dir -u ftp://$ip -w pslist.txt
-```
-
-All NSE scripts
-```bash
-nmap -p21 -sV --script "*ftp*" $ip
-```
-
-# Service Enumeration
-
-```bash
-nmap -sC -sV -p- $ip
-
-sudo nmap -sU --open --top-ports=200 192.168.110.8
-
-ls /usr/share/nmap/scripts | grep smtp-*
-
 nmap --script-help smtp-*
+```
 
-nc -nvv -w 1 -z 192.168.50.152 3388-3390
+search for nmap scripts
+```bash
+ls /usr/share/nmap/scripts/ | grep smtp-*
+```
 
-nc -nv $ip 21
+run default scripts on port
+```bash
+nmap -sC -sV -p25 $ip
+```
 
-timeout 5 nc $ip 21
+enumerate all tcp ports & os detection
+```bash
+nmap -p- -O $ip
+```
 
-curl -s --max-time 8 ftp://anonymous:anonymous@$ip/
-
-gobuster dir -u ftp://$ip -w pslist.txt
-
-curl -v ftp://$ip:21/ 2>&1 | head -n 5 
+enumerate top 200 udp
+```bash
+sudo nmap -sU --open --top-ports=200 $ip
 ```
