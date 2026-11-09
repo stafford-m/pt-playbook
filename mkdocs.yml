@@ -34,6 +34,7 @@ nav:
       - generic/scans.md
       - generic/bruteforcing.md
       - generic/publicexploits.md
+      - generic/pivoting.md
   - Service Enumeration:
       - services/dns.md
       - services/ftp.md

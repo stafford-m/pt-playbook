@@ -18,6 +18,21 @@ Query SMB/MSRPC via rpcclient (if applicable)
 rpcclient -U "" -N $ip -c "srvinfo"
 ```
 
+un/pw sign in
+```bash
+rpcclient -U "$domain/$username%$password" $ip
+```
+
+common rpc commands, non-exhaustive
+```bash
+srvinfo
+querydominfo
+getdompwinfo
+enumdomusers
+queryuser <username|rid>
+querydomusergroups <username|rid>
+```
+
 ## Config Paths
 rpcbind
 ```text
