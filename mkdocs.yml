@@ -33,6 +33,7 @@ nav:
   - Generic:
       - generic/scans.md
       - generic/bruteforcing.md
+      - generic/publicexploits.md
   - Service Enumeration:
       - services/dns.md
       - services/ftp.md
