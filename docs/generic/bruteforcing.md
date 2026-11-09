@@ -32,3 +32,9 @@ Brute force with a password list
 ```bash
 hydra -L users.txt -P pass.txt -t 4 ssh://$ip
 ```
+
+Telnet
+Brute force with hydra
+```bash
+hydra -L users.txt -P pass.txt telnet://$ip
+```
