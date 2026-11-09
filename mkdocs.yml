@@ -30,7 +30,9 @@ plugins:
 
 nav:
   - Home: index.md
-  - Services:
+  - Generic:
+      - generic/scans.md
+  - Service Enumeration:
       - services/dns.md
       - services/ftp.md
       - services/http.md
