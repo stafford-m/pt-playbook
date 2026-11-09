@@ -35,6 +35,8 @@ nav:
       - generic/bruteforcing.md
       - generic/publicexploits.md
       - generic/pivoting.md
+  - Active Directory:
+      - activedirectory/adenumeration.md
   - Service Enumeration:
       - services/dns.md
       - services/ftp.md
