@@ -51,3 +51,4 @@ gobuster dir -u ftp://$ip -w pslist.txt
 additionally, gobuster can be used for dns, tftp, vhosts, and more
 ```bash
 gobuster vhost -u http://$ip -w wl.txt
+```
