@@ -16,13 +16,6 @@ nc $ip $port
 -p      # specify port (for listen)
 ```
 
-## curl
-curl can be used for protocols other than http
-```bash
-curl -v ftp://$ip:21/ 2>&1 | head -n 5
-curl -s --max-time 8 ftp://anonymous:anonymous@$ip/
-```
-
 ## nmap
 gettings all help for a specific protocol
 ```bash
@@ -47,4 +40,11 @@ nmap -p- -O $ip
 enumerate top 200 udp
 ```bash
 sudo nmap -sU --open --top-ports=200 $ip
+```
+
+## curl
+curl can be used for protocols other than http
+```bash
+curl -v ftp://$ip:21/ 2>&1 | head -n 5
+curl -s --max-time 8 ftp://anonymous:anonymous@$ip/
 ```
