@@ -34,11 +34,9 @@ sudo tcpdump -i lo -A | grep "pass"
 ## Cron jobs
 
 __REQUIRES__
-```text
- - Cronjob running a script
- - Write permission over said script
- - Said script running on reasonable interval
-```
+- Cronjob running a script
+- Write permission over said script
+- Said script running on reasonable interval
 
 Check cron history and verify file permissions
 ```bash
@@ -60,9 +58,7 @@ nc -lvnp 1234
 ## Abuse Password Authentication
 
 __REQUIRES__
-```text
- - Write permissions on /etc/passwd
-```
+- Write permissions on /etc/passwd
 
 Create password hash
 ```bash
