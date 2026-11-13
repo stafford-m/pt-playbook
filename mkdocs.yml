@@ -36,10 +36,11 @@ nav:
       - generic/publicexploits.md
       - generic/pivoting.md
   - Privilege Escalation:
-      - privesc/windowsosenum.md
-      - privesc/linuxosenum.md
+      - Windows Privesc:
+        - privesc/windows/windowsosenum.md
       - Linux Privesc:
-          - privesc/informationexposure.md
+          - privesc/linux/linuxosenum.md
+          - privesc/linux/informationexposure.md
   - Active Directory:
       - activedirectory/adenumeration.md
   - Service Enumeration:
