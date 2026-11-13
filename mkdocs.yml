@@ -35,6 +35,9 @@ nav:
       - generic/bruteforcing.md
       - generic/publicexploits.md
       - generic/pivoting.md
+  - Privilege Escalation:
+      - privesc/windowsosenum.md
+      - privesc/linuxosenum.md
   - Active Directory:
       - activedirectory/adenumeration.md
   - Service Enumeration:
