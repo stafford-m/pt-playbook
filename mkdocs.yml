@@ -38,6 +38,8 @@ nav:
   - Privilege Escalation:
       - privesc/windowsosenum.md
       - privesc/linuxosenum.md
+      - Linux Privesc:
+          - privesc/informationexposure.md
   - Active Directory:
       - activedirectory/adenumeration.md
   - Service Enumeration:
