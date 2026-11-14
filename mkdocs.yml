@@ -39,6 +39,7 @@ nav:
       - Windows Privesc:
           - privesc/windows/windowsosenum.md
           - privesc/windows/exposedcredentials.md
+          - privesc/windows/windowsservices.md
       - Linux Privesc:
           - privesc/linux/linuxosenum.md
           - privesc/linux/informationexposure.md
