@@ -41,6 +41,8 @@ nav:
       - Linux Privesc:
           - privesc/linux/linuxosenum.md
           - privesc/linux/informationexposure.md
+          - privesc/linux/insecurefilepermissions.md
+          - privesc/linux/insecuresystemcomponents.md
   - Active Directory:
       - activedirectory/adenumeration.md
   - Service Enumeration:
