@@ -49,3 +49,11 @@ Reverse shell complete
 nc -lvnp 1000
 [connect to the internal interface of pivot machine]
 ```
+
+## Teardown
+
+```bash
+sudo ip route del 10.10.10.0/24 dev ligolo
+sudo ip link set ligolo down
+sudo ip tuntap del mode tun ligolo
+```
