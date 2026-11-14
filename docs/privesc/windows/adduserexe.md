@@ -2,6 +2,7 @@
 
 ## adduser.c
 
+```text
 #include <stdlib.h>
 
 int main ()
@@ -13,3 +14,4 @@ int main ()
   
   return 0;
 }
+```
