@@ -37,8 +37,8 @@ nav:
       - generic/pivoting.md
   - Privilege Escalation:
       - Windows Privesc:
-        - privesc/windows/windowsosenum.md
-        - privesc/windows/exposedcredentials.md
+          - privesc/windows/windowsosenum.md
+          - privesc/windows/exposedcredentials.md
       - Linux Privesc:
           - privesc/linux/linuxosenum.md
           - privesc/linux/informationexposure.md
