@@ -52,6 +52,7 @@ nav:
   - Active Directory:
       - activedirectory/adenumeration.md
       - activedirectory/cachedadcreds.md
+      - activedirectory/passwordattacks.md
   - Resources:
       - privesc/windows/adduserexe.md
       - privesc/windows/adduserdll.md
