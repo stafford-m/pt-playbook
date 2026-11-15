@@ -55,6 +55,7 @@ nav:
       - activedirectory/passwordattacks.md
       - activedirectory/asreproast.md
       - activedirectory/kerberoasting.md
+      - activedirectory/silvertickets.md
   - Resources:
       - privesc/windows/adduserexe.md
       - privesc/windows/adduserdll.md
