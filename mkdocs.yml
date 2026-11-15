@@ -51,6 +51,7 @@ nav:
           - privesc/linux/insecuresystemcomponents.md
   - Active Directory:
       - activedirectory/adenumeration.md
+      - activedirectory/cachedadcreds.md
   - Service Enumeration:
       - services/dns.md
       - services/ftp.md

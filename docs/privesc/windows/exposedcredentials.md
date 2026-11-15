@@ -1,5 +1,7 @@
 # Exposed Credentials
 
+__Search for leaked credentials__
+
 ## The Basics
 
 Search C drive by file type
@@ -30,6 +32,8 @@ runas /user:backupadmin cmd
 
 
 ## Exposed Powershell Information
+
+__Search for leaked credentials__
 
 PS History
 ```powershell
