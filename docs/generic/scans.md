@@ -17,7 +17,7 @@ nc $ip $port
 ```
 
 ## nmap
-gettings all help for a specific protocol
+getting all help for a specific protocol
 ```bash
 nmap --script-help smtp-*
 ```
