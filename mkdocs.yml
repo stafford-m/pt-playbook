@@ -67,6 +67,7 @@ nav:
       - web/phpwrappers.md
       - web/rfi.md
       - web/uploads.md
+      - web/cmdinjection.md
   - Service Enumeration:
       - services/dns.md
       - services/ftp.md
