@@ -68,6 +68,7 @@ nav:
       - web/rfi.md
       - web/uploads.md
       - web/cmdinjection.md
+      - web/sqli.md
   - Service Enumeration:
       - services/dns.md
       - services/ftp.md
