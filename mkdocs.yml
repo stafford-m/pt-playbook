@@ -61,6 +61,8 @@ nav:
       - privesc/windows/adduserexe.md
       - privesc/windows/adduserdll.md
       - activedirectory/spraypasswords.md
+  - Web App Attacks:
+      - web/dirtraversal.md
   - Service Enumeration:
       - services/dns.md
       - services/ftp.md
