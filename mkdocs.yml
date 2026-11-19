@@ -64,6 +64,7 @@ nav:
   - Web App Attacks:
       - web/dirtraversal.md
       - web/lfi.md
+      - web/phpwrappers.md
   - Service Enumeration:
       - services/dns.md
       - services/ftp.md
