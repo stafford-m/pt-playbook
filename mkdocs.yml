@@ -63,6 +63,7 @@ nav:
       - activedirectory/spraypasswords.md
   - Web App Attacks:
       - web/dirtraversal.md
+      - web/lfi.md
   - Service Enumeration:
       - services/dns.md
       - services/ftp.md
