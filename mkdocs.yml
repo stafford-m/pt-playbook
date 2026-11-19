@@ -65,6 +65,7 @@ nav:
       - web/dirtraversal.md
       - web/lfi.md
       - web/phpwrappers.md
+      - web/rfi.md
   - Service Enumeration:
       - services/dns.md
       - services/ftp.md
