@@ -41,9 +41,6 @@ nav:
           - privesc/windows/exposedcredentials.md
           - privesc/windows/windowsservices.md
           - privesc/windows/othercomponents.md
-          - Resources:
-              - privesc/windows/adduserexe.md
-              - privesc/windows/adduserdll.md
       - Linux Privesc:
           - privesc/linux/linuxosenum.md
           - privesc/linux/informationexposure.md
