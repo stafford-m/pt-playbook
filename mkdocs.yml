@@ -58,14 +58,15 @@ nav:
       - activedirectory/silvertickets.md
       - activedirectory/dcsync.md
   - Resources:
-      - privesc/windows/adduserexe.md
-      - privesc/windows/adduserdll.md
-      - activedirectory/spraypasswords.md
+      - resources/adduserexe.md
+      - resources/adduserdll.md
+      - resources/spraypasswords.md
   - Web App Attacks:
       - web/dirtraversal.md
       - web/lfi.md
       - web/phpwrappers.md
       - web/rfi.md
+      - web/uploads.md
   - Service Enumeration:
       - services/dns.md
       - services/ftp.md
