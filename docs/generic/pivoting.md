@@ -5,7 +5,7 @@
 Create a tuntap interface
 ```bash
 sudo ip tuntap add user kali mode tun ligolo
-sudo up link set ligolo up
+sudo ip link set ligolo up
 ```
 
 Start ligolo proxy

