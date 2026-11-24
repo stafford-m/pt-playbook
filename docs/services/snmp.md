@@ -52,34 +52,3 @@ Windows SNMP MIB values
 1.3.6.1.4.1.77.1.2.25	User Accounts
 1.3.6.1.2.1.6.13.1.3	TCP Local Ports
 ```
-
-## Config Paths
-
-snmpd (Linux)
-```text
-/etc/snmp/snmpd.conf
-```
-Windows SNMP service
-```text
-HKLM\SYSTEM\CurrentControlSet\Services\SNMP\Parameters
-```
-
-Config quick-reference:
-```text
-snmpd.conf -> rocommunity public, rwcommunity private, access control
-```
-
-## Post-Enumeration
-
-- Dumped users → spray across SMB/SSH/WinRM/HTTP
-- Dumped processes/software → identify vuln software for exploit selection
-- rwcommunity (write) → can set values (sometimes used to write routes/config)
-
-### Common gotchas
-```text
-- UDP-based → use -sU on nmap, and note UDP scans are slow.
-- Only v2c/v1 typically. v3 needs auth/priv creds (rare on OSCP).
-- Public (read-only) is enough to win — write community (private) is a bonus, not required.
-- onesixtyone is much faster than snmpwalk for brute — use it first.
-- onesixtyone -c <file> $ip works, but for many hosts use -i targets.txt.
-```

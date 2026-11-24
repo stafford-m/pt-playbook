@@ -32,17 +32,3 @@ enumdomusers
 queryuser <username|rid>
 querydomusergroups <username|rid>
 ```
-
-## Config Paths
-rpcbind
-```text
-/etc/rpc        # maps RPC program numbers to names
-/etc/inetd.conf # which RPC services are enabled
-```
-
-### Common gotchas
-```text
-- 111 alone is useless; its whole value is pointing you to NFS/mountd/other RPC services.
-- rpcinfo vs nmap --script rpcinfo — both fine, rpcinfo is faster.
-- RPC program numbers map is in /etc/rpc if the names look cryptic.
-```

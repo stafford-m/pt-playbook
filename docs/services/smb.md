@@ -79,39 +79,5 @@ net view \\dc01 /all
 
 Enumerate without creds on enum4linux
 ```bash
-enum4linux -a $ip           # does most of the below in one shot
-```
-
-## Config Paths
-
-Samba
-```text
-/etc/samba/smb.conf
-/usr/local/samba/lib/smb.conf
-```
-Windows Registry (share perms / audit)
-```text
-HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Shares
-```
-
-Config quick-reference:
-```text
-smb.conf     -> check for: writable = yes, guest ok = yes, valid users, restrict anonymous
-Windows      -> check ADMIN$ / C$ write rights (that's the win, not the config file)
-```
-
-### Common gotchas
-```text
-- 445 closed but 139 open? Try SMB1 via -p 139 / add 'client max protocol = SMB2' to smb.conf if modern target refuses SMB1.
-- "NT_STATUS_LOGON_FAILURE" on a correct-looking pw? Try WORKGROUP vs domain, or add -d . for local auth.
-- SMB signing disabled/required: 'nmap --script smb2-security-mode' reveals it — relay attacks need signing disabled.
-- Kerberos vs NTLM: if clock skew / "KRB_AP_ERR_SKEW", check target timezone/drift.
-```
-
-### Command map (moved psexec/wmiexec here for context)
-```text
-impacket-psexec  -> interactive SYSTEM shell (needs admin, port 445)
-impacket-wmiexec -> shell over WMI (port 135/5985, quieter than psexec)
-impacket-smbexec -> semi-interactive, uses SMB only
-netexec          -> enumeration + creds + --exec-method smbexec/atexec for command exec
+enum4linux -a $ip           # does most of the enum
 ```

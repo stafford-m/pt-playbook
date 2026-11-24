@@ -79,3 +79,7 @@ nav:
       - services/telnet.md
       - services/tftp.md
       - services/whois.md
+      - services/smb.md
+      - services/kerberos.md
+      - services/msrpc.md
+      - services/winrm.md
