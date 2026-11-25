@@ -55,8 +55,8 @@ nav:
       - activedirectory/silvertickets.md
       - activedirectory/dcsync.md
   - Resources:
-      - resources/adduserexe.md
-      - resources/adduserdll.md
+      - resources/poisoned_bin.md
+      - resources/web_payloads.md
       - resources/spraypasswords.md
   - Web App Attacks:
       - web/dirtraversal.md

