@@ -13,8 +13,10 @@ xfreerdp /v:$ip /u:$un /p:$pw +clipboard
 /v:$ip
 /u:$un
 /p:$pw
+/size:1920x1060
 /cert:ignore
 /dynamic-resolution
 +clipboard
 +drives:/tmp,/share
+/auto-reconnect
 ```

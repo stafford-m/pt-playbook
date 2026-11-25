@@ -36,3 +36,13 @@ Use nmap script library
 ```bash
 nmap --script-help smtp-*
 ```
+
+# smtp.py
+
+Check Resources for script
+
+Validate Usernames (sometimes error codes can give it away)
+```bash
+python3 smtp.py root 192.168.50.8
+python3 smtp.py johndoe 192.168.50.8
+```
